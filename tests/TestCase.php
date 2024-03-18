@@ -1,7 +1,8 @@
 <?php
 
-namespace Ludo237\Traits\Tests;
+namespace Ludo237\Toolbox\Tests;
 
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Schema;
 
@@ -13,23 +14,26 @@ class TestCase extends \Orchestra\Testbench\TestCase
     {
         parent::setUp();
 
-        $this->loadMigrationsFrom(__DIR__.'/database/migrations/');
+        $this->setupDatabase();
     }
 
-    /** @test */
-    public function it_runs_the_migrations()
+    protected function setupDatabase(): void
     {
-        $columns = Schema::getColumnListing('users');
-        $this->assertEquals([
-            'id',
-            'uuid',
-            'api_key',
-            'slug',
-            'name',
-            'banned_at',
-            'activated_at',
-            'created_at',
-            'updated_at',
-        ], $columns);
+        Schema::create('users', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->uuid();
+            $table->string('api_key')->nullable();
+            $table->string('slug')->unique();
+            $table->string('name');
+            $table->dateTime('banned_at')->nullable()->default(null);
+            $table->dateTime('activated_at')->nullable()->default(null);
+            $table->timestamps();
+        });
+
+        Schema::create('posts', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('user_id')->nullable()->index();
+            $table->timestamps();
+        });
     }
 }

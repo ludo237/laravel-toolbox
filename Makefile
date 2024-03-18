@@ -12,7 +12,7 @@ docker_up:
 	yes | cp -rf $(ROOT_DIR).env.example $(ROOT_DIR).env
 	docker run --rm --tty --interactive --volume $(ROOT_DIR):/app registry.gitlab.com/6go/dx/docker/composer:latest composer install --ignore-platform-req=ext-intl --ignore-platform-req=ext-gd
 	docker-compose up -d --build --force-recreate
-	docker exec -it php apk add mysql-client make ffmpeg
+	docker exec -it laravel-toolbox apk add mysql-client make ffmpeg
 	echo "Docker containers are ready"
 
 docker_down:
@@ -22,9 +22,6 @@ docker_down:
 laravel_init: directories
 	echo "Bootstrapping development environment"
 	cp $(ROOT_DIR).env.example .env
-	php artisan key:generate
-	php artisan migrate:fresh --seed
-	php artisan optimize:clear
 	echo "Laravel is ready"
 
 test_init: directories
@@ -33,8 +30,6 @@ test_init: directories
 	mkdir -p $(ROOT_DIR)reports/phpunit/coverage
 	touch $(ROOT_DIR)reports/phpunit/coverage/teamcity.txt
 	php -r "file_exists('.env') || copy('./envs/.env.dev', '.env');"
-	php artisan optimize:clear
-	php artisan migrate:fresh --env=testing
 	echo "Tests are ready"
 
 test_coverage: test_init
@@ -45,10 +40,7 @@ test_coverage: test_init
 		--env=testing
 
 test:
-	php artisan test
-
-test_fast:
-	php artisan test --parallel --processes=6
+	./vendor/bin/pest
 
 audit:
 	composer audit

@@ -1,28 +1,26 @@
 <?php
 
-namespace Ludo237\Traits\Tests;
+namespace Ludo237\Toolbox\Tests\Unit\Traits;
 
 use Illuminate\Support\Facades\Date;
-use Ludo237\Traits\Tests\Stubs\UserStub;
+use Ludo237\Toolbox\Tests\Stubs\UserStub;
+use Ludo237\Toolbox\Tests\TestCase;
+use Ludo237\Toolbox\Traits\Bannable;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Test;
 
+#[Group('traits'), CoversClass(Bannable::class)]
 class BannableTest extends TestCase
 {
-    /**
-     * @test
-     *
-     * @covers \Ludo237\Traits\Traits\Bannable::banField
-     */
-    public function it_returns_the_right_ban_field()
+    #[Test]
+    public function it_returns_right_ban_field()
     {
         $this->assertEquals('banned_at', UserStub::banField());
     }
 
-    /**
-     * @test
-     *
-     * @covers \Ludo237\Traits\Traits\Bannable::remainingBanDays
-     */
-    public function it_returns_the_number_of_days_remaining_for_the_ban()
+    #[Test]
+    public function it_returns_number_of_days_remaining_for_the_ban()
     {
         $user = UserStub::query()->create([
             'name' => 'foo',
@@ -32,12 +30,7 @@ class BannableTest extends TestCase
         $this->assertEquals(10, $user->remainingBanDays());
     }
 
-    /**
-     * @test
-     *
-     * @covers \Ludo237\Traits\Traits\Bannable::isBanned
-     * @covers \Ludo237\Traits\Traits\Bannable::isNotBanned
-     */
+    #[Test]
     public function it_returns_true_if_an_entity_is_banned()
     {
         $user = UserStub::query()->create([
@@ -49,11 +42,7 @@ class BannableTest extends TestCase
         $this->assertFalse($user->isNotBanned());
     }
 
-    /**
-     * @test
-     *
-     * @covers \Ludo237\Traits\Traits\Bannable::isStillBanned
-     */
+    #[Test]
     public function it_returns_true_if_an_entity_is_still_banned_up_until_today()
     {
         $user = UserStub::query()->create([
@@ -71,11 +60,7 @@ class BannableTest extends TestCase
         $this->assertFalse($user->isStillBanned());
     }
 
-    /**
-     * @test
-     *
-     * @covers \Ludo237\Traits\Traits\Bannable::hasExpiredBan
-     */
+    #[Test]
     public function it_returns_true_if_an_entity_has_an_expired_ban()
     {
         $user = UserStub::query()->create([
@@ -93,16 +78,7 @@ class BannableTest extends TestCase
         $this->assertTrue($user->hasExpiredBan());
     }
 
-    /**
-     * @test
-     *
-     * @covers \Ludo237\Traits\Traits\Bannable::banFor
-     * @covers \Ludo237\Traits\Traits\Bannable::banForOneDay
-     * @covers \Ludo237\Traits\Traits\Bannable::banForOneWeek
-     * @covers \Ludo237\Traits\Traits\Bannable::banForOneMonth
-     * @covers \Ludo237\Traits\Traits\Bannable::banForOneYear
-     * @covers \Ludo237\Traits\Traits\Bannable::banForever
-     */
+    #[Test]
     public function it_can_ban_an_entity()
     {
         $user = UserStub::query()->create(['name' => 'foo']);
@@ -144,11 +120,7 @@ class BannableTest extends TestCase
         ]);
     }
 
-    /**
-     * @test
-     *
-     * @covers \Ludo237\Traits\Traits\Bannable::liftBan
-     */
+    #[Test]
     public function it_can_lift_a_ban()
     {
         $user = UserStub::query()->create([

@@ -1,13 +1,20 @@
 <?php
 
-namespace Ludo237\Traits\Tests;
+namespace Ludo237\Toolbox\Tests\Unit\Traits;
 
-use Ludo237\Traits\Tests\Stubs\PostStub;
-use Ludo237\Traits\Tests\Stubs\UserStub;
+use Illuminate\Database\Eloquent\Model;
+use Ludo237\Toolbox\Tests\Stubs\PostStub;
+use Ludo237\Toolbox\Tests\Stubs\UserStub;
+use Ludo237\Toolbox\Tests\TestCase;
+use Ludo237\Toolbox\Traits\OwnedByUser;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Test;
 
+#[Group('traits'), CoversClass(OwnedByUser::class)]
 class OwnedByUserTest extends TestCase
 {
-    private UserStub $user;
+    private UserStub|Model $user;
 
     protected function setUp(): void
     {
@@ -21,36 +28,19 @@ class OwnedByUserTest extends TestCase
         ]);
     }
 
-    /**
-     * @test
-     *
-     * @covers \Ludo237\Traits\Traits\OwnedByUser::ownerField
-     */
+    #[Test]
     public function it_returns_the_right_owner_field()
     {
         $this->assertEquals('id', PostStub::ownerField());
     }
 
-    /**
-     * @test
-     *
-     * @covers \Ludo237\Traits\Traits\OwnedByUser::foreignOwnerField
-     */
+    #[Test]
     public function it_returns_the_right_foreign_owner_field()
     {
         $this->assertEquals('user_id', PostStub::foreignOwnerField());
     }
 
-    /**
-     * @test
-     *
-     * @covers \Ludo237\Traits\Traits\OwnedByUser::isOwned
-     * @covers \Ludo237\Traits\Traits\OwnedByUser::isNotOwned
-     * @covers \Ludo237\Traits\Traits\OwnedByUser::isOwnedBy
-     * @covers \Ludo237\Traits\Traits\OwnedByUser::isNotOwnedBy
-     * @covers \Ludo237\Traits\Traits\OwnedByUser::isOwnedByUserId
-     * @covers \Ludo237\Traits\Traits\OwnedByUser::isNotOwnedByUserId
-     */
+    #[Test]
     public function it_can_check_if_it_is_owned()
     {
         $post = PostStub::query()->create();
@@ -74,11 +64,7 @@ class OwnedByUserTest extends TestCase
         $this->assertFalse($anotherPost->isNotOwnedByUserId($this->user->getKey()));
     }
 
-    /**
-     * @test
-     *
-     * @covers \Ludo237\Traits\Traits\OwnedByUser::isNotOwned
-     */
+    #[Test]
     public function it_can_check_if_it_is_not_owned()
     {
         $post = PostStub::query()->create();
@@ -90,14 +76,9 @@ class OwnedByUserTest extends TestCase
         $this->assertFalse($anotherPost->isNotOwned());
     }
 
-    /**
-     * @test
-     *
-     * @covers \Ludo237\Traits\Traits\OwnedByUser::owner
-     */
+    #[Test]
     public function user_can_be_set_through_a_convenient_mutator()
     {
-        /** @var \Ludo237\Traits\Tests\Stubs\PostStub $post */
         $post = PostStub::query()->create();
         $post->owner = $this->user;
 
@@ -105,11 +86,7 @@ class OwnedByUserTest extends TestCase
         $this->assertEquals($this->user->getKey(), $post->owner->getKey());
     }
 
-    /**
-     * @test
-     *
-     * @covers \Ludo237\Traits\Traits\OwnedByUser::user
-     */
+    #[Test]
     public function it_inject_the_belongs_to_user_relationship()
     {
         $post = PostStub::query()->create([

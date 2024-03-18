@@ -2,17 +2,15 @@
 
 namespace Ludo237\Toolbox\Rules;
 
+use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
 class WithoutSpaceRule implements ValidationRule
 {
-    public function passes($attribute, $value) : bool
+    public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        return intval(preg_match('/^\S*$/u', $value)) === 1;
-    }
-
-    public function message() : string
-    {
-        return "The attribute :attribute contains spaces";
+        if (intval(preg_match('/^\S*$/u', $value)) !== 1) {
+            $fail('The attribute :attribute contains spaces');
+        }
     }
 }

@@ -1,46 +1,32 @@
 <?php
 
-namespace Ludo237\Traits\Tests;
+namespace Ludo237\Toolbox\Tests\Unit\Traits;
 
-use Ludo237\Traits\Tests\Stubs\UserStub;
+use Ludo237\Toolbox\Tests\Stubs\UserStub;
+use Ludo237\Toolbox\Tests\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 class ExposeTablePropertiesTest extends TestCase
 {
-    /**
-     * @test
-     *
-     * @covers \Ludo237\Traits\Traits\ExposeTableProperties::tableName
-     */
+    #[Test]
     public function it_displays_the_table_name()
     {
         $this->assertEquals('users', UserStub::tableName());
     }
 
-    /**
-     * @test
-     *
-     * @covers \Ludo237\Traits\Traits\ExposeTableProperties::primaryKeyName
-     */
+    #[Test]
     public function it_displays_the_primary_key_name()
     {
         $this->assertEquals('id', UserStub::primaryKeyName());
     }
 
-    /**
-     * @test
-     *
-     * @covers \Ludo237\Traits\Traits\ExposeTableProperties::primaryKeyType
-     */
+    #[Test]
     public function it_displays_the_primary_key_type()
     {
         $this->assertEquals('int', UserStub::primaryKeyType());
     }
 
-    /**
-     * @test
-     *
-     * @covers \Ludo237\Traits\Traits\ExposeTableProperties::primaryKey
-     */
+    #[Test]
     public function it_returns_the_complete_set_for_primary_key()
     {
         $this->assertIsArray(UserStub::primaryKey());

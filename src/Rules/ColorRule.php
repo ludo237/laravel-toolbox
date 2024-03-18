@@ -157,46 +157,46 @@ class ColorRule implements ValidationRule
         'yellow',
         'yellowgreen',
     ];
-    
+
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
         $value = (string) $value;
-        
+
         if (
-            !$this->isWord($value) &&
-            !$this->isHex($value) &&
-            !$this->isRGB($value) &&
-            !$this->isRGBA($value)
+            ! $this->isWord($value) &&
+            ! $this->isHex($value) &&
+            ! $this->isRGB($value) &&
+            ! $this->isRGBA($value)
         ) {
-            $fail('validation.color')->translate();
+            $fail(':attribute is not a valid color');
         }
     }
-    
+
     public function isHex(string $color): bool
     {
         if (preg_match('/^#([A-Fa-f0-9]){6}$/i', $color) > 0) {
             return true;
         }
-        
+
         return preg_match('/^#([A-Fa-f0-9]){3}$/i', $color) > 0;
     }
-    
+
     public function isRGB(string $color): bool
     {
         return preg_match(
-                "/^(rgb)\(([01]?\d\d?|2[0-4]\d|25[0-5])(\W+)([01]?\d\d?|2[0-4]\d|25[0-5])\W+(([01]?\d\d?|2[0-4]\d|25[0-5])\))$/i",
-                $color,
-            ) > 0;
+            "/^(rgb)\(([01]?\d\d?|2[0-4]\d|25[0-5])(\W+)([01]?\d\d?|2[0-4]\d|25[0-5])\W+(([01]?\d\d?|2[0-4]\d|25[0-5])\))$/i",
+            $color,
+        ) > 0;
     }
-    
+
     public function isRGBA(string $color): bool
     {
         return preg_match(
-                "/^(rgba)\(([01]?\d\d?|2[0-4]\d|25[0-5])\W+([01]?\d\d?|2[0-4]\d|25[0-5])\W+([01]?\d\d?|2[0-4]\d|25[0-5])\)?\W+([01](\.\d+)?)\)$/i",
-                $color,
-            ) > 0;
+            "/^(rgba)\(([01]?\d\d?|2[0-4]\d|25[0-5])\W+([01]?\d\d?|2[0-4]\d|25[0-5])\W+([01]?\d\d?|2[0-4]\d|25[0-5])\)?\W+([01](\.\d+)?)\)$/i",
+            $color,
+        ) > 0;
     }
-    
+
     public function isWord(string $color): bool
     {
         return in_array($color, $this->humanColors);

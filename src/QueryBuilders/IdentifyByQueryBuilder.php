@@ -9,11 +9,11 @@ readonly class IdentifyByQueryBuilder
     public function __construct(private string|int $key)
     {
     }
-    
+
     public function __invoke(Builder $builder): Builder
     {
         return $builder
-            ->where("id", "=", $this->key)
-            ->orWhere("uid", "=", $this->key);
+            ->where('id', '=', $this->key)
+            ->orWhere('uid', '=', $this->key);
     }
 }

@@ -9,8 +9,8 @@ class PriceRule implements ValidationRule
 {
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        if (!preg_match("/^[\d.,]+$/", (string) $value)) {
-            $fail('validation.price')->translate();
+        if (! preg_match("/^[\d.,]+$/", (string) $value)) {
+            $fail(':attribute is not a valid price');
         }
     }
 }

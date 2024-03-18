@@ -2,39 +2,28 @@
 
 namespace Ludo237\Toolbox\Rules;
 
+use Closure;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Support\Facades\Crypt;
 
-class SecureCryptoTokenRule implements ValidationRule
+readonly class SecureCryptoTokenRule implements ValidationRule
 {
-    private array $params;
-    private string $glue;
-
     /**
      * Create a new rule instance.
-     *
-     * @param array $params
-     * @param string $glue
      */
-    public function __construct(array $params, string $glue)
+    public function __construct(private array $params, private string $glue)
     {
-        $this->params = $params;
-        $this->glue = $glue;
     }
 
-    public function passes($attribute, $value) : bool
+    public function validate(string $attribute, mixed $value, Closure $fail): void
     {
         try {
-            return implode($this->glue, $this->params) === Crypt::decrypt($value, true);
+            if (! implode($this->glue, $this->params) === Crypt::decrypt($value)) {
+                $fail('The attribute :attribute contains an invalid crypto token');
+            }
         } catch (DecryptException $exception) {
-            // TODO This can lead to an attack attempt we could log the invalid payload if we need
-            return false;
+            $fail($exception->getMessage());
         }
-    }
-
-    public function message() : string
-    {
-        return "The attribute :attribute contains an invalid crypto token";
     }
 }

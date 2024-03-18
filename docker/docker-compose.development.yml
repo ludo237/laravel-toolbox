@@ -1,0 +1,19 @@
+version: "3.8"
+
+services:
+  workspace:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+    container_name: laravel-toolbox
+    restart: on-failure
+    environment:
+      APP_ENV: ${APP_ENV}
+      XDEBUG_MODE: debug,coverage
+      OPCACHE_ENABLE: 0
+    volumes:
+      - phpsocket:/var/run/socket
+      - ./:/var/www:cached
+
+volumes:
+  phpsocket:

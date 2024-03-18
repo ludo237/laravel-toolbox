@@ -1,3 +1,6 @@
 vendor
 composer.lock
 .env
+docker-compose.yml
+.phpunit.cache
+reports

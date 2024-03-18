@@ -1,9 +1,9 @@
 <?php
 
-namespace Ludo237\Traits\Tests\Stubs;
+namespace Ludo237\Toolbox\Tests\Stubs;
 
 use Illuminate\Database\Eloquent\Model;
-use Ludo237\Traits\Traits\OwnedByUser;
+use Ludo237\Toolbox\Traits\OwnedByUser;
 
 class PostStub extends Model
 {

@@ -2,31 +2,20 @@
 
 namespace Ludo237\Toolbox\Rules;
 
-
+use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Support\Facades\Hash;
 
-class MatchPasswordRule implements ValidationRule
+readonly class MatchPasswordRule implements ValidationRule
 {
-    private string $expected;
-
-    /**
-     * Create a new rule instance.
-     *
-     * @param string $expected
-     */
-    public function __construct(string $expected)
+    public function __construct(private string $expected)
     {
-        $this->expected = $expected;
     }
 
-    public function passes($attribute, $value) : bool
+    public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        return Hash::check($value, $this->expected);
-    }
-
-    public function message() : string
-    {
-        return "The provided password does not match";
+        if (! Hash::check($value, $this->expected)) {
+            $fail('The provided password does not match');
+        }
     }
 }

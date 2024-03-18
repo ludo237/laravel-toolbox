@@ -1,36 +1,32 @@
 <?php
 
-namespace Ludo237\Rules\Tests;
+namespace Ludo237\Toolbox\Tests\Unit\Rules;
 
 use Illuminate\Support\Facades\Date;
-use Ludo237\Rules\RequestNotExpiredRule;
+use Ludo237\Toolbox\Rules\RequestNotExpiredRule;
+use Ludo237\Toolbox\Tests\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 /**
  * @group Rules
  */
 class RequestNotExpiredRuleTest extends TestCase
 {
-    /**
-     * @test
-     * @covers \Ludo237\Rules\NotExpired
-     */
+    #[Test]
     public function a_not_expired_date_should_pass_the_validation()
     {
         $rule = new RequestNotExpiredRule();
 
         $this->assertTrue(
-            $rule->passes("input", Date::now()->addHour()->timestamp)
+            $rule->passes('input', Date::now()->addHour()->timestamp)
         );
 
         $this->assertFalse(
-            $rule->passes("input", Date::now()->subHour()->timestamp)
+            $rule->passes('input', Date::now()->subHour()->timestamp)
         );
     }
 
-    /**
-     * @test
-     * @covers \Ludo237\Rules\NotExpired::message
-     */
+    #[Test]
     public function it_returns_a_valid_error_message()
     {
         $rule = new RequestNotExpiredRule();

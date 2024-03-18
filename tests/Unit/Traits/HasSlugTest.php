@@ -1,48 +1,37 @@
 <?php
 
-namespace Ludo237\Traits\Tests;
+namespace Ludo237\Toolbox\Tests\Unit\Traits;
 
 use Illuminate\Support\Str;
-use Ludo237\Traits\Tests\Stubs\UserStub;
-use Ludo237\Traits\Traits\HasSlug;
+use Ludo237\Toolbox\Tests\Stubs\UserStub;
+use Ludo237\Toolbox\Tests\TestCase;
+use Ludo237\Toolbox\Traits\HasSlug;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Test;
 
+#[Group('traits'), CoversClass(HasSlug::class)]
 class HasSlugTest extends TestCase
 {
-    /**
-     * @test
-     *
-     * @covers \Ludo237\Traits\HasSlug::sluggableKey
-     */
+    #[Test]
     public function it_has_a_sluggable_key()
     {
-        $this->assertEquals('name', HasSlug::sluggableKey());
+        $this->assertEquals('name', UserStub::sluggableKey());
     }
 
-    /**
-     * @test
-     *
-     * @covers \Ludo237\Traits\HasSlug::separator
-     */
+    #[Test]
     public function it_has_a_separator()
     {
-        $this->assertEquals('.', HasSlug::separator());
+        $this->assertEquals('.', UserStub::separator());
     }
 
-    /**
-     * @test
-     *
-     * @covers \Ludo237\Traits\HasSlug::slugKey
-     */
+    #[Test]
     public function it_has_a_slug_key()
     {
-        $this->assertEquals('slug', HasSlug::slugKey());
+        $this->assertEquals('slug', UserStub::slugKey());
     }
 
-    /**
-     * @test
-     *
-     * @covers \Ludo237\Traits\HasSlug::bootHasSlug
-     */
+    #[Test]
     public function it_creates_a_slug_if_not_provided_when_creating()
     {
         $user = UserStub::query()->create(['name' => 'foo']);
@@ -55,11 +44,7 @@ class HasSlugTest extends TestCase
         $this->assertEquals(Str::slug($user->getAttributeValue('name')), $slug[0]);
     }
 
-    /**
-     * @test
-     *
-     * @covers \Ludo237\Traits\HasSlug::bootHasSlug
-     */
+    #[Test]
     public function it_does_not_create_a_slug_if_provided_when_creating()
     {
         $user = UserStub::query()->create(['name' => 'foo', 'slug' => 'foo.bar_baz']);
@@ -67,11 +52,7 @@ class HasSlugTest extends TestCase
         $this->assertEquals('foo.bar_baz', $user->getAttributeValue('slug'));
     }
 
-    /**
-     * @test
-     *
-     * @covers \Ludo237\Traits\HasSlug::bootHasSlug
-     */
+    #[Test]
     public function it_creates_a_slug_if_not_provided_when_updating()
     {
         $user = UserStub::query()->create(['name' => 'foo', 'slug' => 'foo.bar_baz']);
@@ -100,11 +81,7 @@ class HasSlugTest extends TestCase
         $this->assertEquals(Str::slug($user->getAttributeValue('name')), $slug[0]);
     }
 
-    /**
-     * @test
-     *
-     * @covers \Ludo237\Traits\HasSlug::bootHasSlug
-     */
+    #[Test]
     public function it_does_not_create_a_slug_if_provided_when_updating()
     {
         $user = UserStub::query()->create(['name' => 'foo', 'slug' => 'foo.bar_baz']);
