@@ -1,13 +1,68 @@
-# You can override the included template(s) by including variable overrides
-# SAST customization: https://docs.gitlab.com/ee/user/application_security/sast/#customizing-the-sast-settings
-# Secret Detection customization: https://docs.gitlab.com/ee/user/application_security/secret_detection/pipeline/#customization
-# Dependency Scanning customization: https://docs.gitlab.com/ee/user/application_security/dependency_scanning/#customizing-the-dependency-scanning-settings
-# Container Scanning customization: https://docs.gitlab.com/ee/user/application_security/container_scanning/#customizing-the-container-scanning-settings
-# Note that environment variables can be set in several places
-# See https://docs.gitlab.com/ee/ci/variables/#cicd-variable-precedence
-stages:
-- test
-sast:
-  stage: test
 include:
-- template: Security/SAST.gitlab-ci.yml
+  - template: Dependency-Scanning.gitlab-ci.yml
+
+image: registry.gitlab.com/6go/dx/docker/php:8.2
+
+cache:
+  key: $CI_COMMIT_REF_SLUG
+  paths:
+    - .composer-cache/
+    - .phpunit.result.cache
+
+composer:
+  needs: [ ]
+  artifacts:
+    expire_in: 1 day
+    paths:
+      - vendor/
+  script:
+    - composer config -g cache-dir "$(pwd)/.composer-cache"
+    - composer update --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts -o
+
+pint:
+  needs:
+    - job: composer
+      artifacts: true
+  artifacts:
+    paths:
+      - reports
+      - ./storage/logs
+    expire_in: 1 day
+    when: on_failure
+  before_script:
+    - mkdir -p ./reports
+  script:
+    - ./vendor/bin/pint
+
+phpstan:
+  needs:
+    - job: composer
+      artifacts: true
+  script:
+    - ./vendor/bin/phpstan analyse --error-format gitlab
+
+phpcpd:
+  needs: [ ]
+  before_script:
+    - test -f phpcpd.phar || curl -L https://phar.phpunit.de/phpcpd.phar -o phpcpd.phar
+  script:
+    - php phpcpd.phar src/ --min-lines=50
+
+audit:
+  needs: []
+  script:
+    - composer audit
+
+pest:
+  needs:
+    - job: composer
+      artifacts: true
+  artifacts:
+    paths:
+      - reports
+    expire_in: 1 day
+    when: on_failure
+  before_script:
+    - mkdir -p ./reports
+  script:
+    - XDEBUG_MODE=coverage ./vendor/bin/pest

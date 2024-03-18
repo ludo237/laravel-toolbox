@@ -1,0 +1,56 @@
+{
+  "name": "ludo237/laravel-toolbox",
+  "description": "Useful set of Laravel tools",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Claudio Ludovico",
+      "email": "quiet.flame8899@fastmail.com"
+    }
+  ],
+  "homepage": "https://gitlab.com/ludo237/laravel-toolbox",
+  "keywords": [
+    "laravel",
+    "tool",
+    "laravel-package",
+    "open-source"
+  ],
+  "require": {
+    "php": "^8.2",
+    "illuminate/support": "10.x | 11.x"
+  },
+  "require-dev": {
+    "fakerphp/faker": "^1.11",
+    "larastan/larastan": "^v2.9",
+    "laravel/framework": "10.x | 11.x",
+    "laravel/pint": "^1.14",
+    "mockery/mockery": "^1.6",
+    "orchestra/testbench": "^v8.21",
+    "pestphp/pest": "^2.34"
+  },
+  "autoload": {
+    "psr-4": {
+      "Ludo237\\Toolbox\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Ludo237\\Toolbox\\Tests\\": "tests"
+    }
+  },
+  "minimum-stability": "stable",
+  "config": {
+    "optimize-autoloader": true,
+    "preferred-install": "dist",
+    "sort-packages": true,
+    "allow-plugins": {
+      "pestphp/pest-plugin": true
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [],
+      "aliases": {}
+    }
+  }
+}
