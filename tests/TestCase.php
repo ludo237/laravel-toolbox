@@ -21,8 +21,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
     {
         Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->uuid();
-            $table->string('api_key')->nullable();
+            $table->ulid('uid');
             $table->string('slug')->unique();
             $table->string('name');
             $table->dateTime('banned_at')->nullable()->default(null);

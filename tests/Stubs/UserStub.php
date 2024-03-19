@@ -21,6 +21,6 @@ class UserStub extends Model implements Authenticatable
 
     public function uniqueIds(): array
     {
-        return ['uuid'];
+        return ['uid'];
     }
 }
