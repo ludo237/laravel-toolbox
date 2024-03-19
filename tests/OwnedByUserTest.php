@@ -1,11 +1,10 @@
 <?php
 
-namespace Ludo237\Toolbox\Tests\Unit\Traits;
+namespace Ludo237\Toolbox\Tests;
 
 use Illuminate\Database\Eloquent\Model;
 use Ludo237\Toolbox\Tests\Stubs\PostStub;
 use Ludo237\Toolbox\Tests\Stubs\UserStub;
-use Ludo237\Toolbox\Tests\TestCase;
 use Ludo237\Toolbox\Traits\OwnedByUser;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;

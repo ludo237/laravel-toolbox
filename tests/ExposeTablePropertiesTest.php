@@ -1,9 +1,8 @@
 <?php
 
-namespace Ludo237\Toolbox\Tests\Unit\Traits;
+namespace Ludo237\Toolbox\Tests;
 
 use Ludo237\Toolbox\Tests\Stubs\UserStub;
-use Ludo237\Toolbox\Tests\TestCase;
 use PHPUnit\Framework\Attributes\Test;
 
 class ExposeTablePropertiesTest extends TestCase

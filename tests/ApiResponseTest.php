@@ -1,13 +1,12 @@
 <?php
 
-namespace Ludo237\Toolbox\Tests\Unit;
+namespace Ludo237\Toolbox\Tests;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Str;
 use Laravel\Sanctum\NewAccessToken;
 use Laravel\Sanctum\PersonalAccessToken;
 use Ludo237\Toolbox\ApiResponse;
-use Ludo237\Toolbox\Tests\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 

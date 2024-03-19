@@ -19,7 +19,7 @@ readonly class SecureCryptoTokenRule implements ValidationRule
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
         try {
-            if (! implode($this->glue, $this->params) === Crypt::decrypt($value)) {
+            if (implode($this->glue, $this->params) !== Crypt::decrypt($value)) {
                 $fail('The attribute :attribute contains an invalid crypto token');
             }
         } catch (DecryptException $exception) {

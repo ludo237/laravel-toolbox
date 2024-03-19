@@ -1,10 +1,9 @@
 <?php
 
-namespace Ludo237\Toolbox\Tests\Unit\Traits;
+namespace Ludo237\Toolbox\Tests;
 
 use Illuminate\Support\Facades\Date;
 use Ludo237\Toolbox\Tests\Stubs\UserStub;
-use Ludo237\Toolbox\Tests\TestCase;
 use Ludo237\Toolbox\Traits\Bannable;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
