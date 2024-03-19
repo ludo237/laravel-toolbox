@@ -10,6 +10,11 @@ readonly class IdentifyBy
     {
     }
 
+    /**
+     * @phpstan-param \Illuminate\Database\Eloquent\Builder<\Illuminate\Database\Eloquent\Model> $builder
+     *
+     * @phpstan-return \Illuminate\Database\Eloquent\Builder<\Illuminate\Database\Eloquent\Model>
+     */
     public function __invoke(Builder $builder): Builder
     {
         return $builder
