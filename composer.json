@@ -18,7 +18,7 @@
   "require": {
     "php": "^8.2",
     "illuminate/support": "10.x | 11.x",
-    "laravel/sanctum": "^3.3"
+    "laravel/sanctum": "3.x | 4.x"
   },
   "require-dev": {
     "fakerphp/faker": "^1.11",
