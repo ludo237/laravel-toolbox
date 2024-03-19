@@ -4,13 +4,13 @@ namespace Ludo237\Toolbox\Tests;
 
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Str;
-use Ludo237\Toolbox\Rules\SecureCryptoTokenRule;
+use Ludo237\Toolbox\Rules\SecureCryptoToken;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 
-#[Group('rules'), CoversClass(SecureCryptoTokenRule::class)]
-class SecureCryptoTokenRuleTest extends TestCase
+#[Group('rules'), CoversClass(SecureCryptoToken::class)]
+class SecureCryptoTokenTest extends TestCase
 {
     #[Test]
     public function a_secure_match_must_pass_the_validation()
@@ -19,7 +19,7 @@ class SecureCryptoTokenRuleTest extends TestCase
         $closure = function () use (&$failed) {
             $failed = true;
         };
-        $rule = new SecureCryptoTokenRule([1234, 'foo bar'], '_');
+        $rule = new SecureCryptoToken([1234, 'foo bar'], '_');
 
         $rule->validate('input', Crypt::encrypt('1234_foo bar'), $closure);
         $this->assertFalse($failed);
@@ -32,7 +32,7 @@ class SecureCryptoTokenRuleTest extends TestCase
         $closure = function () use (&$failed) {
             $failed = true;
         };
-        $rule = new SecureCryptoTokenRule([1234, 'foo bar'], '_');
+        $rule = new SecureCryptoToken([1234, 'foo bar'], '_');
 
         $rule->validate('input', Crypt::encrypt('1234+foo bar'), $closure);
         $this->assertTrue($failed);

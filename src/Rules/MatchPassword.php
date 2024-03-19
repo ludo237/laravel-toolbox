@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Support\Facades\Hash;
 
-readonly class MatchPasswordRule implements ValidationRule
+readonly class MatchPassword implements ValidationRule
 {
     public function __construct(private string $expected)
     {

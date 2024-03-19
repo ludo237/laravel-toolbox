@@ -4,7 +4,7 @@ namespace Ludo237\Toolbox\QueryBuilders;
 
 use Illuminate\Database\Eloquent\Builder;
 
-readonly class IdentifyByQueryBuilder
+readonly class IdentifyBy
 {
     public function __construct(private string|int $key)
     {

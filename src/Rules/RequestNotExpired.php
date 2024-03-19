@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Support\Facades\Date;
 
-class RequestNotExpiredRule implements ValidationRule
+class RequestNotExpired implements ValidationRule
 {
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {

@@ -7,7 +7,7 @@ use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Support\Facades\Crypt;
 
-readonly class SecureCryptoTokenRule implements ValidationRule
+readonly class SecureCryptoToken implements ValidationRule
 {
     /**
      * Create a new rule instance.

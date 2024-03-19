@@ -5,7 +5,7 @@ namespace Ludo237\Toolbox\Rules;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
-class PriceRule implements ValidationRule
+class ValidPrice implements ValidationRule
 {
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {

@@ -5,7 +5,7 @@ namespace Ludo237\Toolbox\Rules;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
-class ColorRule implements ValidationRule
+class ValidColor implements ValidationRule
 {
     private array $humanColors = [
         'aliceblue',

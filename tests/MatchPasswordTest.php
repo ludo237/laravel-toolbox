@@ -2,13 +2,13 @@
 
 namespace Ludo237\Toolbox\Tests;
 
-use Ludo237\Toolbox\Rules\MatchPasswordRule;
+use Ludo237\Toolbox\Rules\MatchPassword;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 
-#[Group('rules'), CoversClass(MatchPasswordRule::class)]
-class MatchPasswordRuleTest extends TestCase
+#[Group('rules'), CoversClass(MatchPassword::class)]
+class MatchPasswordTest extends TestCase
 {
     #[Test]
     public function a_secure_match_must_pass_the_validation()
@@ -20,7 +20,7 @@ class MatchPasswordRuleTest extends TestCase
 
         // Mocking the attribute but we don't care that much
         $hash = bcrypt('foobar');
-        $rule = new MatchPasswordRule($hash);
+        $rule = new MatchPassword($hash);
 
         $rule->validate('input', 'foobar', $closure);
 
@@ -37,7 +37,7 @@ class MatchPasswordRuleTest extends TestCase
 
         // Mocking the attribute but we don't care that much
         $hash = bcrypt('foobar');
-        $rule = new MatchPasswordRule($hash);
+        $rule = new MatchPassword($hash);
 
         $rule->validate('input', 'fooba', $closure);
         $this->assertTrue($failed);
